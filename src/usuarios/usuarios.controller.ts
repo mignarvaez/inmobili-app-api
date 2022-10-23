@@ -6,14 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { ApiTags } from '@nestjs/swagger';
+import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
+import { Usuario } from './schemas/usuario.schema';
 
 @ApiTags('usuarios')
 @Controller('usuarios')
+@UseInterceptors(MongooseClassSerializerInterceptor(Usuario))
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 

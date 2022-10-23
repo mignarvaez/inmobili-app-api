@@ -6,12 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  UseInterceptors,
 } from '@nestjs/common';
 import { InmueblesService } from './inmuebles.service';
 import { CreateInmuebleDto } from './dto/create-inmueble.dto';
 import { UpdateInmuebleDto } from './dto/update-inmueble.dto';
+import { Inmueble } from './schemas/inmueble.schema';
+import { EspecificacionesParcial } from './dto/especificaciones-partial.dto';
+import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
 
 @Controller('inmuebles')
+@UseInterceptors(MongooseClassSerializerInterceptor(Inmueble))
 export class InmueblesController {
   constructor(private readonly inmueblesService: InmueblesService) {}
 
@@ -25,21 +31,40 @@ export class InmueblesController {
     return this.inmueblesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.inmueblesService.findOne(+id);
+  @Get('/availables')
+  findAllAvailables() {
+    return this.inmueblesService.findAllAvailables();
   }
 
-  @Patch(':id')
+  @Get('/unavailables')
+  findAllUnavailables() {
+    return this.inmueblesService.findAllUnavailables();
+  }
+
+  @Post('/especificacion')
+  findByEspecificacion(
+    @Body() especificacionesBusquedaDto: EspecificacionesParcial,
+  ) {
+    return this.inmueblesService.findByEspecificacion(
+      especificacionesBusquedaDto,
+    );
+  }
+
+  @Get(':idInmueble')
+  findOne(@Param('idInmueble', ParseIntPipe) idInmueble: number) {
+    return this.inmueblesService.findOne(+idInmueble);
+  }
+
+  @Patch(':idInmueble')
   update(
-    @Param('id') id: string,
+    @Param('idInmueble', ParseIntPipe) idInmueble: number,
     @Body() updateInmuebleDto: UpdateInmuebleDto,
   ) {
-    return this.inmueblesService.update(+id, updateInmuebleDto);
+    return this.inmueblesService.update(+idInmueble, updateInmuebleDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.inmueblesService.remove(+id);
+  @Delete(':idInmueble')
+  remove(@Param('idInmueble', ParseIntPipe) idInmueble: number) {
+    return this.inmueblesService.remove(+idInmueble);
   }
 }

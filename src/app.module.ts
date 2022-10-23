@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AppConfigurationModule } from './infrastructure/configuration/app-configuration.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { InmueblesModule } from './inmuebles/inmuebles.module';
@@ -29,7 +27,5 @@ import { AppConfigurationService } from './infrastructure/configuration/app-conf
       },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

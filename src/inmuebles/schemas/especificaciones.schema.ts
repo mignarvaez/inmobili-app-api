@@ -1,4 +1,5 @@
 import { Prop, Schema } from '@nestjs/mongoose';
+import { TipoInmueble } from '../constants/tipoInmueble';
 
 @Schema({ _id: false })
 export class Especificaciones {
@@ -8,8 +9,8 @@ export class Especificaciones {
   @Prop({ required: true })
   direccion: string;
 
-  @Prop({ required: true })
-  tipoInmueble: string;
+  @Prop({ required: true, enum: TipoInmueble })
+  tipoInmueble: TipoInmueble;
 
   @Prop({ required: true })
   valorArriendo: number;

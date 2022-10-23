@@ -1,4 +1,3 @@
-import mongoose, { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Especificaciones } from './especificaciones.schema';
 import { Usuario } from 'src/usuarios/schemas/usuario.schema';
@@ -7,19 +6,17 @@ export type InmuebleDocument = Inmueble & Document;
 
 @Schema()
 export class Inmueble {
-  @Prop({ required: true, index: true, unique: true })
+  @Prop({ unique: true })
   idInmueble: number;
 
-  @Prop({
-    required: true,
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  })
+  @Prop({ type: String, ref: Usuario.name, index: true })
   propietario: Usuario;
 
   @Prop({ required: true })
   titulo: string;
+
+  @Prop()
+  descripcion: string;
 
   @Prop({ required: true, type: Especificaciones })
   especificaciones: Especificaciones;
@@ -30,11 +27,7 @@ export class Inmueble {
   @Prop({ required: true })
   fechaPublicacion: Date;
 
-  @Prop({
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  })
+  @Prop({ type: String, ref: 'Usuario', index: true })
   arrendatario?: Usuario;
 
   @Prop({
@@ -48,5 +41,4 @@ export class Inmueble {
   })
   fotos?: Buffer[];
 }
-
 export const InmuebleSchema = SchemaFactory.createForClass(Inmueble);
