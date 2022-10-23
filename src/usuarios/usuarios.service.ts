@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { Usuario, UsuarioDocument } from './schemas/usuario.schema';
 
 @Injectable()
 export class UsuariosService {
-  create(createUsuarioDto: CreateUsuarioDto) {
-    return 'This action adds a new usuario';
+  constructor(
+    @InjectModel(Usuario.name)
+    private readonly UsuarioModel: Model<UsuarioDocument>,
+  ) {}
+
+  async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
+    //Validar existente
+    const usuarioCreado = new this.UsuarioModel(createUsuarioDto);
+    return usuarioCreado.save();
   }
 
-  findAll() {
-    return `This action returns all usuarios`;
+  async findAll() {
+    return this.UsuarioModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+  async findOne(email: string) {
+    return this.UsuarioModel.findOne({ email: email }).exec();
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+  async update(email: string, updateUsuarioDto: UpdateUsuarioDto) {
+    return this.UsuarioModel.findOneAndUpdate(
+      { email: email },
+      updateUsuarioDto,
+      {
+        new: true, // Devuelve el objeto modificado
+      },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  async remove(email: string) {
+    return this.UsuarioModel.findOneAndRemove({ email: email }).exec();
   }
 }
