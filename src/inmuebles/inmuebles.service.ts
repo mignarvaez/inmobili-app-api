@@ -78,10 +78,12 @@ export class InmueblesService {
   }
 
   async update(idInmueble: number, updateInmuebleDto: UpdateInmuebleDto) {
-    updateInmuebleDto.especificaciones = await this.fixEspecificaciones(
-      idInmueble,
-      updateInmuebleDto,
-    );
+    if (updateInmuebleDto.especificaciones)
+      updateInmuebleDto.especificaciones = await this.fixEspecificaciones(
+        idInmueble,
+        updateInmuebleDto,
+      );
+
     return this.inmuebleModel
       .findOneAndUpdate({ idInmueble: idInmueble }, updateInmuebleDto, {
         new: true, // Devuelve el objeto modificado
@@ -124,9 +126,8 @@ export class InmueblesService {
         HttpStatus.NOT_FOUND,
       );
     }
-    const especificacionesLimpias: EspecificacionesDto =
-      especificacionesPrevias.especificaciones;
 
+    const especificacionesLimpias = especificacionesPrevias.especificaciones;
     Object.entries(especificacionesLimpias).forEach(([key]) => {
       Object.entries(updateInmuebleDto.especificaciones).forEach(
         ([key2, value2]) => {
