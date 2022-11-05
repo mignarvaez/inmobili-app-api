@@ -7,13 +7,15 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
 import { Usuario } from './schemas/usuario.schema';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('usuarios')
 @Controller('usuarios')
@@ -26,16 +28,22 @@ export class UsuariosController {
     return this.usuariosService.create(createUsuarioDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usuariosService.findAll();
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':email')
   findOne(@Param('email') email: string) {
     return this.usuariosService.findOne(email);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Patch(':email')
   update(
     @Param('email') email: string,
@@ -44,6 +52,8 @@ export class UsuariosController {
     return this.usuariosService.update(email, updateUsuarioDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':email')
   remove(@Param('email') email: string) {
     return this.usuariosService.remove(email);

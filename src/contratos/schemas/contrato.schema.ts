@@ -1,43 +1,28 @@
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Usuario } from 'src/usuarios/schemas/usuario.schema';
 import { Inmueble } from 'src/inmuebles/schemas/inmueble.schema';
 
 export type ContratoDocument = Contrato & Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Contrato {
-  @Prop({ required: true, index: true, unique: true })
+  @Prop({ unique: true })
   idContrato: number;
 
-  @Prop({
-    required: true,
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Inmueble',
-  })
-  inmueble: Inmueble;
+  @Prop({ required: true, index: true, type: Number, ref: Inmueble.name })
+  idInmueble: Inmueble;
 
   @Prop({ required: true })
-  fechaContrato: Date;
+  fechaContrato: string;
 
   @Prop({ required: true })
-  fechaPublicacion: Date;
+  fechaPublicacion: string;
 
-  @Prop({
-    required: true,
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  })
+  @Prop({ required: true, index: true, type: String, ref: Usuario.name })
   propietario: Usuario;
 
-  @Prop({
-    required: true,
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  })
+  @Prop({ required: true, index: true, type: String, ref: Usuario.name })
   arrendatario: Usuario;
 
   @Prop({ required: true })
@@ -50,10 +35,10 @@ export class Contrato {
   valorAdmin?: number;
 
   @Prop({ default: true })
-  activo: boolean;
+  activo?: boolean;
 
   @Prop()
-  fechaTerminacion?: Date;
+  fechaTerminacion?: string;
 }
 
 export const ContratoSchema = SchemaFactory.createForClass(Contrato);

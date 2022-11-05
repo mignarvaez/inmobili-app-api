@@ -92,7 +92,7 @@ export class InmueblesService {
   }
 
   async remove(idInmueble: number) {
-    if (await this.canRemove(idInmueble))
+    if (await this.checkArrendatario(idInmueble))
       return this.inmuebleModel
         .findOneAndRemove({ idInmueble: idInmueble })
         .exec();
@@ -103,9 +103,18 @@ export class InmueblesService {
       );
   }
 
-  private canRemove(idInmueble: number) {
+  async checkArrendatario(idInmueble: number) {
     return this.inmuebleModel
       .exists({ idInmueble: idInmueble, arrendatario: { $ne: '' } })
+      .exec();
+  }
+
+  async actualizarArriendo(idInmueble: number, arrendatario: string) {
+    this.inmuebleModel
+      .findOneAndUpdate(
+        { idInmueble: idInmueble },
+        { arrendatario: arrendatario },
+      )
       .exec();
   }
 

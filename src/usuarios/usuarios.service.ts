@@ -4,9 +4,11 @@ import { Model } from 'mongoose';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario, UsuarioDocument } from './schemas/usuario.schema';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuariosService {
+  SALT_OR_ROUNDS = 10;
   constructor(
     @InjectModel(Usuario.name)
     private readonly usuarioModel: Model<UsuarioDocument>,
@@ -18,7 +20,14 @@ export class UsuariosService {
         `Email: ${createUsuarioDto.email} ya registrado`,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
-    const usuarioCreado = new this.usuarioModel(createUsuarioDto);
+    const hashedContrasena = await bcrypt.hash(
+      createUsuarioDto.contrasena,
+      this.SALT_OR_ROUNDS,
+    );
+    const usuarioCreado = new this.usuarioModel({
+      ...createUsuarioDto,
+      contrasena: hashedContrasena,
+    });
     return usuarioCreado.save();
   }
 

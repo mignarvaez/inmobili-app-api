@@ -29,5 +29,6 @@ import { UsuariosModule } from 'src/usuarios/usuarios.module';
   ],
   controllers: [InmueblesController],
   providers: [InmueblesService],
+  exports: [InmueblesService],
 })
 export class InmueblesModule {}

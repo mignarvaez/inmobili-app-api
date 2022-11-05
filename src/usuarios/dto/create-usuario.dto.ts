@@ -6,10 +6,6 @@ export class CreateUsuarioDto {
   @IsEmail()
   readonly email: string;
 
-  @ApiProperty({ example: '1213$Sd1sda48' })
-  @IsString()
-  readonly contrasena: string;
-
   @ApiProperty({ example: 'Pedro perez' })
   @IsString()
   readonly nombre: string;
@@ -21,4 +17,8 @@ export class CreateUsuarioDto {
   @ApiProperty({ example: '2434122' })
   @IsString()
   readonly telefono: string;
+
+  @ApiProperty({ example: '1234' })
+  @IsString()
+  readonly contrasena: string;
 }

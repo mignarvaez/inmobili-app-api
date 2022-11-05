@@ -19,6 +19,7 @@ async function bootstrap() {
       'API de InmobiliAPP una aplicación para la gestión de inmuebles',
     )
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);

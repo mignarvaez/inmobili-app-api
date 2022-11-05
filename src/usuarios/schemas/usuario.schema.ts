@@ -4,14 +4,10 @@ import { Exclude } from 'class-transformer';
 
 export type UsuarioDocument = Usuario & Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Usuario {
   @Prop({ required: true, unique: true })
   email: string;
-
-  @Prop({ required: true })
-  @Exclude()
-  contrasena: string;
 
   @Prop()
   nombre?: string;
@@ -21,6 +17,10 @@ export class Usuario {
 
   @Prop()
   telefono?: string;
+
+  @Prop({ required: true })
+  @Exclude()
+  contrasena: string;
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);
