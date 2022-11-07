@@ -13,9 +13,9 @@ import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
+import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 import { Usuario } from './schemas/usuario.schema';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('usuarios')
 @Controller('usuarios')
@@ -40,6 +40,13 @@ export class UsuariosController {
   @Get(':email')
   findOne(@Param('email') email: string) {
     return this.usuariosService.findOne(email);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('/usuariocompleto/:email')
+  obtenerInformacionUsuarioCompleto(@Param('email') email: string) {
+    return this.usuariosService.obtenerInformacionUsuarioCompleto(email);
   }
 
   @ApiBearerAuth()

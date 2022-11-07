@@ -3,7 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { Usuario, UsuarioDocument } from './schemas/usuario.schema';
+import {
+  Usuario,
+  UsuarioCompleto,
+  UsuarioCompletoDocument,
+  UsuarioDocument,
+} from './schemas/usuario.schema';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -12,6 +17,8 @@ export class UsuariosService {
   constructor(
     @InjectModel(Usuario.name)
     private readonly usuarioModel: Model<UsuarioDocument>,
+    @InjectModel(UsuarioCompleto.name)
+    private readonly usuarioCompletoModel: Model<UsuarioCompletoDocument>,
   ) {}
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
@@ -37,6 +44,15 @@ export class UsuariosService {
 
   async findOne(email: string) {
     return this.usuarioModel.findOne({ email: email }).exec();
+  }
+
+  async obtenerInformacionUsuarioCompleto(email: string) {
+    if (!(await this.checkEmail(email)))
+      throw new HttpException(
+        `Usuario con email: ${email} no se encuentra registrado`,
+        HttpStatus.NOT_FOUND,
+      );
+    return this.usuarioCompletoModel.findOne({ email: email }).exec();
   }
 
   async update(email: string, updateUsuarioDto: UpdateUsuarioDto) {

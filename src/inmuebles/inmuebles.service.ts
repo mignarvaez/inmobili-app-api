@@ -42,6 +42,14 @@ export class InmueblesService {
     return this.inmuebleModel.findOne({ idInmueble: idInmueble }).exec();
   }
 
+  async encontrarPorPropietario(email: string) {
+    return this.inmuebleModel.findOne({ propietario: email }).exec();
+  }
+
+  async encontrarPorArrendatario(email: string) {
+    return this.inmuebleModel.findOne({ arrendatario: email }).exec();
+  }
+
   async findByEspecificacion(
     especificacionesBusqueda: EspecificacionesParcial,
   ) {

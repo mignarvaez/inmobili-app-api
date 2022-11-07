@@ -71,6 +71,20 @@ export class InmueblesController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Get('propietario/:email')
+  encontrarPorPropietario(@Param('email') email: string) {
+    return this.inmueblesService.encontrarPorPropietario(email);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('arrendatario/:email')
+  encontrarPorArrendatario(@Param('email') email: string) {
+    return this.inmueblesService.encontrarPorArrendatario(email);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Patch(':idInmueble')
   update(
     @Param('idInmueble', ParseIntPipe) idInmueble: number,
