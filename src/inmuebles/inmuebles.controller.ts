@@ -62,8 +62,6 @@ export class InmueblesController {
     );
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get(':idInmueble')
   findOne(@Param('idInmueble', ParseIntPipe) idInmueble: number) {
     return this.inmueblesService.findOne(+idInmueble);
