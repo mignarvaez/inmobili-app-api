@@ -23,7 +23,7 @@ export class Usuario {
   @Exclude()
   contrasena: string;
 }
-@Schema({ collection: 'usuarioCompleto', autoCreate: false })
+@Schema({ collection: 'usuariosCompleto', autoCreate: false })
 export class UsuarioCompleto {
   @Prop()
   email: string;
