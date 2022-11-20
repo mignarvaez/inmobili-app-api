@@ -100,7 +100,7 @@ export class InmueblesService {
   }
 
   async remove(idInmueble: number) {
-    if (await this.checkArrendatario(idInmueble))
+    if (!await this.checkArrendatario(idInmueble))
       return this.inmuebleModel
         .findOneAndRemove({ idInmueble: idInmueble })
         .exec();
