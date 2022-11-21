@@ -56,8 +56,16 @@ export class UsuariosService {
   }
 
   async update(email: string, updateUsuarioDto: UpdateUsuarioDto) {
-    return this.usuarioModel
-      .findOneAndUpdate({ email: email }, updateUsuarioDto, {
+        const hashedContrasena = await bcrypt.hash(
+            updateUsuarioDto.contrasena,
+            this.SALT_OR_ROUNDS,
+        );
+        const usuarioEditado = {
+            ...updateUsuarioDto,
+            contrasena: hashedContrasena,
+        };
+      return this.usuarioModel
+          .findOneAndUpdate({ email: email }, usuarioEditado, {
         new: true, // Devuelve el objeto modificado
       })
       .exec();
