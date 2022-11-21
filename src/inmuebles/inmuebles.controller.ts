@@ -15,9 +15,9 @@ import { CreateInmuebleDto } from './dto/create-inmueble.dto';
 import { UpdateInmuebleDto } from './dto/update-inmueble.dto';
 import { Inmueble } from './schemas/inmueble.schema';
 import { EspecificacionesParcial } from './dto/especificaciones-partial.dto';
-import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
+import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('inmuebles')
 @Controller('inmuebles')

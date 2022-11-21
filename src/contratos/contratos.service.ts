@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { InmueblesService } from 'src/inmuebles/inmuebles.service';
-import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { InmueblesService } from '../inmuebles/inmuebles.service';
+import { UsuariosService } from '../usuarios/usuarios.service';
 import { CreateContratoDto } from './dto/create-contrato.dto';
 import { UpdateContratoDto } from './dto/update-contrato.dto';
 import { Contrato, ContratoDocument } from './schemas/contrato.schema';

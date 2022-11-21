@@ -11,8 +11,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import MongooseClassSerializerInterceptor from 'src/utils/mongooseClassSerializer.interceptor';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 import { ContratosService } from './contratos.service';
 import { CreateContratoDto } from './dto/create-contrato.dto';
 import { UpdateContratoDto } from './dto/update-contrato.dto';

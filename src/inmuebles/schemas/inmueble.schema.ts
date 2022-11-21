@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Especificaciones } from './especificaciones.schema';
-import { Usuario } from 'src/usuarios/schemas/usuario.schema';
+import { Usuario } from '../../usuarios/schemas/usuario.schema';
 
 export type InmuebleDocument = Inmueble & Document;
 

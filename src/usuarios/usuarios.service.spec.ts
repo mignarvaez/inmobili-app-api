@@ -91,22 +91,17 @@ describe('UsuariosService', () => {
       });
   });
 
-  it('deberia actualizar un usuario', () => {
+  it('deberia actualizar un usuario', async () => {
     expect(
-      service.update('prueba@email.com', {
+      await service.update('prueba@email.com', {
         nombre: 'Juan Alvarez',
         identificacion: usuario.identificacion,
         telefono: usuario.telefono,
-        contrasena: usuario.contrasena,
       } as UpdateUsuarioDto),
-    )
-      .resolves.toEqual({
-        ...usuarioActualizado,
-        contrasena: expect.anything(),
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    ).toStrictEqual({
+      ...usuarioActualizado,
+      contrasena: '1234',
+    });
   });
 
   it('deberia eliminar un usuario', () => {
@@ -126,7 +121,7 @@ describe('UsuariosService', () => {
   });
 
   it('deberia buscar información de usuario completo según email registrado', () => {
-    jest.spyOn(UsuarioModel, 'exists').mockImplementation(() => true);
+    jest.spyOn(UsuarioModel, 'exists').mockReturnValue({ exec: () => true });
     expect(service.obtenerInformacionUsuarioCompleto('prueba@email.com'))
       .resolves.toEqual(usuario)
       .catch((err) => {

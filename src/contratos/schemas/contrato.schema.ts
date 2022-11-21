@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Usuario } from 'src/usuarios/schemas/usuario.schema';
-import { Inmueble } from 'src/inmuebles/schemas/inmueble.schema';
+import { Usuario } from '../../usuarios/schemas/usuario.schema';
+import { Inmueble } from '../../inmuebles/schemas/inmueble.schema';
 
 export type ContratoDocument = Contrato & Document;
 

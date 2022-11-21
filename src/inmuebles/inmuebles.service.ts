@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { UsuariosService } from '../usuarios/usuarios.service';
 import { CreateInmuebleDto } from './dto/create-inmueble.dto';
 import { EspecificacionesParcial } from './dto/especificaciones-partial.dto';
 import { EspecificacionesDto } from './dto/especificaciones.dto';
@@ -100,7 +100,7 @@ export class InmueblesService {
   }
 
   async remove(idInmueble: number) {
-    if (!await this.checkArrendatario(idInmueble))
+    if (!(await this.checkArrendatario(idInmueble)))
       return this.inmuebleModel
         .findOneAndRemove({ idInmueble: idInmueble })
         .exec();
