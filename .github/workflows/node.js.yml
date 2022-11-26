@@ -29,8 +29,3 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - name: publish
-      uses: pennsignals/publish_docker-compose@v0.1.0
-      with:
-        docker_compose: 'docker-compose.yml' # required
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
