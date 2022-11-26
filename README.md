@@ -71,3 +71,13 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Interactuar con Swagger
+
+Para poder realizar peticionesa a la API, la cuál usa Swagger y JWT, se debe primero crear un usuario (o usar uno de los existentes), acceder al endpoint login, generar un bearer token, copiar el bearer token, (lo que se encuentra dentro de las comillas en la propiedad access_token. Ejemplo: yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey) y pegarlo dandole click en la esquina superior derecha de la interfaz, donde aparece la palabra Authorize y un candado.  
+
+Hay dos endpoints que no necesitan autenticación, el login y el de los inmuebles disponibles para arriendo (no tienen un email en el campo arrendatario), el cuál se llama "Availables"
+
+Para la configuración del JWT, en el archivo .envEXAMPLE se encuentra valores para las propiedades requeridas las cuales son SECRET o clave para "firmar" el token y EXPIRATION que se refiere al tiempo en SEGUNDOS de duración del token.
+
+El archivo .envEXAMPLE pueden copiarlo, cambiarle el nombre por .env solamente y ponerle la URL adecuada.

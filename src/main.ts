@@ -10,6 +10,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.setGlobalPrefix('v1');
 
   // Configuración titulos de documentación con swagger
   const config = new DocumentBuilder()
@@ -18,10 +19,11 @@ async function bootstrap() {
       'API de InmobiliAPP una aplicación para la gestión de inmuebles',
     )
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-
+  SwaggerModule.setup('/', app, document);
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();

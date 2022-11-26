@@ -1,0 +1,38 @@
+services:
+    dev:
+        container_name: inmobiliapp_api_dev
+        image: inmobiliapp_api_dev:1.0.0
+        env_file: .env
+        build:
+            context: .
+            target: development
+            dockerfile: ./Dockerfile
+        command: npm run start:debug
+        ports:
+            - 3000:3000
+        networks:
+            - nesjs-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+    prod:
+        container_name: inmobiliapp_api_prod
+        image: inmobiliapp_api_prod:1.0.0
+        env_file: .env
+        build:
+            context: .
+            target: production
+            dockerfile: ./Dockerfile
+        command: node dist/main.js
+        ports:
+            - 3000:3000
+        networks:
+            - nesjs-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+
+networks:
+    nesjs-network:

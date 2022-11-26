@@ -1,25 +1,22 @@
-import mongoose, { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Especificaciones } from './especificaciones.schema';
-import { Usuario } from 'src/usuarios/schemas/usuario.schema';
+import { Usuario } from '../../usuarios/schemas/usuario.schema';
 
 export type InmuebleDocument = Inmueble & Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Inmueble {
-  @Prop({ required: true, index: true, unique: true })
+  @Prop({ unique: true })
   idInmueble: number;
 
-  @Prop({
-    required: true,
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  })
+  @Prop({ required: true, type: String, ref: Usuario.name, index: true })
   propietario: Usuario;
 
   @Prop({ required: true })
   titulo: string;
+
+  @Prop()
+  descripcion?: string;
 
   @Prop({ required: true, type: Especificaciones })
   especificaciones: Especificaciones;
@@ -28,17 +25,13 @@ export class Inmueble {
   estadoPublicacion: string;
 
   @Prop({ required: true })
-  fechaPublicacion: Date;
+  fechaPublicacion: string;
 
-  @Prop({
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  })
+  @Prop({ type: String, ref: 'Usuario', index: true })
   arrendatario?: Usuario;
 
   @Prop({
-    type: [Buffer],
+    type: [String],
     validate: {
       validator: (v) => {
         return v.length <= 16;
@@ -46,7 +39,6 @@ export class Inmueble {
       message: 'La lista de fotos no puede ser superior a 16',
     },
   })
-  fotos?: Buffer[];
+  fotos?: string[];
 }
-
 export const InmuebleSchema = SchemaFactory.createForClass(Inmueble);
