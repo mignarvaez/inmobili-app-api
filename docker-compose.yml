@@ -1,8 +1,7 @@
 services:
     dev:
         container_name: inmobiliapp_api_dev
-        image: inmobiliapp_api_dev:1.0.0
-        env_file: .env
+        image: ghcr.io/mignarvaez/inmobiliapp_api_dev:1.0.0
         build:
             context: .
             target: development
@@ -18,8 +17,7 @@ services:
         restart: unless-stopped
     prod:
         container_name: inmobiliapp_api_prod
-        image: inmobiliapp_api_prod:1.0.0
-        env_file: .env
+        image: ghcr.io/mignarvaez/inmobiliapp_api_prod:1.0.0
         build:
             context: .
             target: production
